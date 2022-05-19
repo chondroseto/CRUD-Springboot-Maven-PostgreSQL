@@ -1,0 +1,7 @@
+package com.enigmacamp.learnspring.exception;
+
+public class    NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
+        super(message);
+    }
+}

@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  db:
+    image: "postgres:alpine"
+    container_name: "dbservice"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db_enigmashop
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  enigmashop-be:
+    build:
+      context:
+      dockerfile: Dockerfile
+    container_name: enigmashop-be
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgredb/db_enigmashop
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_JPA_HIBERNATE_DOL_AUTO=update
+    depends_on:
+      - postgredb
+    networks:
+      - backend
